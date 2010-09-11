@@ -4,7 +4,7 @@ use warnings;
 
 use Exporter::Declare;
 
-our $VERSION = '0.001';
+our $VERSION = '0.002';
 our @UTIL_PACKAGES;
 
 our @EXPORT;
