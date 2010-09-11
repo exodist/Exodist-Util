@@ -1,0 +1,35 @@
+NAME
+    Exodist::Util - Exodist's collection of utility functions
+
+DESCRIPTION
+    Collection of utility functions. This module ties together several
+    components into a single module to import. Importing this module is like
+    importing all the modules listed in the 'SUBMODULES' section.
+
+    Using the module will import all the default exports from all
+    submodules. You may also list what you want imported.
+
+SUBMODULES
+    This module rolls all the following into one.
+
+    List::Util
+    Scalar::Util
+    Exodist::Util::Package
+    Exodist::Util::Alias
+    Exodist::Util::Accessors
+    Exodist::Util::Loader
+    Exodist::Util::Sub
+
+AUTHORS
+    Chad Granum exodist7@gmail.com
+
+COPYRIGHT
+    Copyright (C) 2010 Chad Granum
+
+    Exodist-Util is free software; Standard perl licence.
+
+    Exodist-Util is distributed in the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the license for
+    more details.
+
