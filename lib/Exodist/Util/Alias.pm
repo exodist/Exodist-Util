@@ -5,27 +5,29 @@ use warnings;
 use Exporter::Declare;
 use Exodist::Util::Package qw/ inject_sub /;
 
-export( qw/alias begin/ );
-sub alias {
-    my $caller = caller;
-    for my $package ( @_ ) {
-        eval "require $package; 1" || die $@;
-        my $short = $package;
-        $short =~ s/.*:([^:]+)$/$1/g;
-        inject_sub( $caller, $short, sub { $package });
-    }
-}
+gen_export( qw/alias begin/, sub {
+    my ( $exporting_class, $importing_class ) = @_;
+    sub {
+        for my $package ( @_ ) {
+            eval "require $package; 1" || die $@;
+            my $short = $package;
+            $short =~ s/.*:([^:]+)$/$1/g;
+            inject_sub( $importing_class, $short, sub { $package });
+        }
+    };
+});
 
-export( qw/alias_to begin/ );
-sub alias_to {
-    my $caller = caller;
-    my %pairs = @_;
-    for my $short ( keys %pairs ) {
-        my $package = $pairs{ $short };
-        eval "require $package; 1" || die $@;
-        inject_sub( $caller, $short, sub { $package });
+gen_export( qw/alias_to begin/, sub {
+    my ( $exporting_class, $importing_class ) = @_;
+    sub {
+        my %pairs = @_;
+        for my $short ( keys %pairs ) {
+            my $package = $pairs{ $short };
+            eval "require $package; 1" || die $@;
+            inject_sub( $importing_class, $short, sub { $package });
+        }
     }
-}
+});
 
 1;
 
