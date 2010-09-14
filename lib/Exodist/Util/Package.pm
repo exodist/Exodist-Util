@@ -62,7 +62,8 @@ sub package_sub_map {
 
 =head1 NAME
 
-Exodist::Util::Package - Exodist's collection of package utility functions
+Exodist::Util::Package - Tools for injecting, finding, or mapping subroutines
+in a given package.
 
 =head1 DEFAULT EXPORTS
 
@@ -77,6 +78,8 @@ should be set to true if you are intentionally redefining an existing sub.
 
 =head1 OPTIONAL EXPORTS
 
+=over 4
+
 =item @list = package_subs( $package )
 
 =item @list = package_subs( $package, qr/match/ )
@@ -90,6 +93,8 @@ that will be used to filter the list.
 
 Get a map of name => coderef for all subs in a package. Second orgumunt is an
 optional regexp filter.
+
+=back
 
 =head1 AUTHORS
 

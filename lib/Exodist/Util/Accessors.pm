@@ -196,6 +196,17 @@ sub _arr_shift_accessor {
 
 __END__
 
+=head1 NAME
+
+Exodist::Util::Accessors - Tools for creating both ultra-minimal accessors, and
+highly specialized accessors.
+
+=head1 DESCRIPTION
+
+Use the minimal if you don't need anything fancy and don't want a Moose memory
+footprint. The highly specialsed are not covered by Moose and would likely be
+very verbose to define in Moose.
+
 =head1 EXPORTS
 
 =head2 SIMPLE ACCESSOR GENERATOR

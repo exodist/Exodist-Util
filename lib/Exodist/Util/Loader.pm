@@ -32,7 +32,7 @@ __END__
 
 =head1 NAME
 
-Exodist::Util::Loader - Package Loader that accounts for optional prefix.
+Exodist::Util::Loader - Shorten plugin package names while allowing plugins outside the plugin namespace.
 
 =head1 EXPORTS
 
@@ -41,7 +41,8 @@ Exodist::Util::Loader - Package Loader that accounts for optional prefix.
 =item load_package( $package, $prefix )
 
 Finds and loads $package. $prefix will be appended to $package if $package
-cannot be found.
+cannot be found as-is. If package cannot be found in either option an exception
+is thrown.
 
 =back
 

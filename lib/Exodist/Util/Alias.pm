@@ -66,8 +66,8 @@ Like alias() except you provide a map of alias names and packages to which they
 should map. Like alias it will auto-require tho packages for you.
 
     use Exodist::Util::Alias;
-    alias MyA => My::Package::OtherA,
-          MyB => My::Package::OtherB;
+    alias_to MyA => My::Package::OtherA,
+             MyB => My::Package::OtherB;
 
     my $a = MyA->new();
     my $b = MyB->new();
