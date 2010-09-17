@@ -25,6 +25,11 @@ sub new {
     return $self;
 }
 
+sub stash {
+    my $self = shift;
+    return $STASH{ $self };
+}
+
 sub enhanced_sub {
     my ( $name, $code ) = @_;
     my ( $caller, $file, $line ) = caller;
