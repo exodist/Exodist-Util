@@ -4,6 +4,7 @@ use warnings;
 
 use Exporter::Declare;
 use Exodist::Util::Package qw/inject_sub/;
+use Carp qw/croak/;
 use B;
 
 our @EXPORT = qw/
@@ -15,6 +16,15 @@ our %STASH;
 export( 'enhanced_sub', 'sublike' );
 export( 'esub', 'sublike', \&enhanced_sub );
 
+sub new {
+    my $class = shift;
+    my %proto = @_;
+    my $code = delete $proto{sub} || croak "No code provided";
+    my $self = bless( $code, $class );
+    $STASH{ $self } = \%proto;
+    return $self;
+}
+
 sub enhanced_sub {
     my ( $name, $code ) = @_;
     my ( $caller, $file, $line ) = caller;
@@ -22,9 +32,10 @@ sub enhanced_sub {
     inject_sub( $caller, $name, $code )
         if $name;
 
-    my $self = bless( $code, __PACKAGE__ );
-
-    $STASH{ $self } = { end_line => $line };
+    my $self = __PACKAGE__->new(
+        sub => $code,
+        end_line => $line,
+    );
 
     return $code;
 }
@@ -42,7 +53,7 @@ sub enhance_sub {
         $caller ||= caller;
         $ref = \&{ "$caller\::$sub" }
     }
-    return bless( $ref, __PACKAGE__ );
+    return __PACKAGE__->new( sub => $ref );
 }
 
 sub start_line {
