@@ -44,6 +44,7 @@ sub _simple_accessor {
     my ( $name, $default ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         ( $self->{$name} ) = @_ if @_;
         $self->{$name} = $default->()
             if $default && !exists $self->{$name};
@@ -89,10 +90,11 @@ sub _cat_pull_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my ( $type ) = @_;
         $type ||= '!';
         my $ref = $self->$refname;
-        return @{ delete $ref->{ $type }};
+        return @{ delete $ref->{ $type } || [] };
     };
 }
 
@@ -100,6 +102,8 @@ sub _cat_push_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
+        return unless @_;
         my $ref = $self->$refname;
         push @{ $ref->{ blessed($_) || '!' }} => $_
             for @_;
@@ -110,6 +114,7 @@ sub _cat_keys_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         return keys %$ref;
     };
@@ -119,9 +124,10 @@ sub _cat_all_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my ( $type ) = @_;
         my $ref = $self->$refname;
-        return @{ $ref->{ $type }} if $type;
+        return @{ $ref->{ $type } || [] } if $type;
         return( map { @$_ ? (@$_) : () } values %$ref );
     };
 }
@@ -130,6 +136,7 @@ sub _cat_pull_all_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         my @out = map { @$_ ? (@$_) : () } values %$ref;
         $self->$refname({});
@@ -141,6 +148,7 @@ sub _arr_all_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         return @$ref;
     };
@@ -150,6 +158,8 @@ sub _arr_push_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
+        return unless @_;
         my $ref = $self->$refname;
         push @$ref => @_;
     };
@@ -159,6 +169,7 @@ sub _arr_pull_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         $self->$refname([]);
         return @$ref;
@@ -169,6 +180,7 @@ sub _arr_pop_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         pop @$ref;
     };
@@ -178,6 +190,7 @@ sub _arr_unshift_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         unshift @$ref => @_;
     };
@@ -187,9 +200,16 @@ sub _arr_shift_accessor {
     my ( $refname ) = @_;
     return sub {
         my $self = shift;
+        _verify_self( $self );
         my $ref = $self->$refname;
         shift @$ref;
     };
+}
+
+sub _verify_self {
+    my ( $self ) = @_;
+    return if blessed( $self );
+    croak "Attempted to use accessor on unblessed item '$self'";
 }
 
 1;
