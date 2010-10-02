@@ -2,10 +2,10 @@ package Exodist::Util::Alias;
 use strict;
 use warnings;
 
-use Exporter::Declare;
+use Exporter::Declare '-all';
 use Exodist::Util::Package qw/ inject_sub /;
 
-gen_export( qw/alias begin/, sub {
+gen_default_export( qw/alias begin/, sub {
     my ( $exporting_class, $importing_class ) = @_;
     sub {
         for my $package ( @_ ) {
@@ -17,7 +17,7 @@ gen_export( qw/alias begin/, sub {
     };
 });
 
-gen_export( qw/alias_to begin/, sub {
+gen_default_export( qw/alias_to begin/, sub {
     my ( $exporting_class, $importing_class ) = @_;
     sub {
         my %pairs = @_;

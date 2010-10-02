@@ -2,57 +2,26 @@ package Exodist::Util;
 use strict;
 use warnings;
 
-use Exporter::Declare;
+use Exporter::Declare '-all';
 
-our $VERSION = '0.004';
-our @UTIL_PACKAGES;
+our $VERSION = '0.005';
+our @UTIL_PACKAGES = qw/
+    Exodist::Util::Package
+    Exodist::Util::Alias
+    Exodist::Util::Accessors
+    Exodist::Util::Loader
+    Exodist::Util::Sub
+    List::Util
+    Scalar::Util
+/;
 
-our @EXPORT;
-our %EXPORT;
-our %GEN_EXPORT;
-our @EXPORT_OK;
-our %EXPORT_OK;
-our %GEN_EXPORT_OK;
-our %PARSERS;
-
-BEGIN {
-    @UTIL_PACKAGES = qw/
-        Exodist::Util::Package
-        Exodist::Util::Alias
-        Exodist::Util::Accessors
-        Exodist::Util::Loader
-        Exodist::Util::Sub
-        List::Util
-        Scalar::Util
-    /;
-
-    for my $package ( @UTIL_PACKAGES ) {
-        eval "require $package; 1" || die $@;
-        no strict 'refs';
-        no warnings 'once';
-        my $is_declare = $package->can('export_to')
-            && $package->can('export_to') == Exporter::Declare->can('export_to');
-
-        $package->import(
-            $is_declare ? (':all') : (
-                @{ "$package\::EXPORT" },
-                @{ "$package\::EXPORT_OK" }
-            )
-        );
-
-        push @EXPORT => @{ "$package\::EXPORT" };
-        push @EXPORT_OK => @{ "$package\::EXPORT_OK" };
-
-        if ( $is_declare ) {
-            %PARSERS       = ( %PARSERS,       %{ "$package\::PARSERS"       });
-            %EXPORT        = ( %EXPORT,        %{ "$package\::EXPORT"        });
-            %EXPORT_OK     = ( %EXPORT_OK,     %{ "$package\::EXPORT_OK"     });
-            %GEN_EXPORT    = ( %GEN_EXPORT,    %{ "$package\::GEN_EXPORT"    });
-            %GEN_EXPORT_OK = ( %GEN_EXPORT_OK, %{ "$package\::GEN_EXPORT_OK" });
-        }
-    }
-
+for my $package ( @UTIL_PACKAGES ) {
+    eval "require $package; 1" || die $@;
+    reexport( $package );
 }
+
+#use Data::Dumper;
+#print Dumper( export_meta );
 
 1;
 

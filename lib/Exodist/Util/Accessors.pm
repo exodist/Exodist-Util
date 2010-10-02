@@ -7,7 +7,7 @@ use Exodist::Util::Package qw/inject_sub/;
 use Scalar::Util qw/blessed/;
 use Carp qw/croak/;
 
-our @EXPORT = qw/
+default_exports qw/
     abstract
     accessors
     array_accessors

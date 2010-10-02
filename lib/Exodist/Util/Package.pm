@@ -5,10 +5,10 @@ use warnings;
 use Exporter::Declare;
 use Carp qw/croak/;
 
-our @EXPORT = qw/
+default_exports qw/
     inject_sub
 /;
-our @EXPORT_OK = qw/
+exports qw/
     package_subs
     package_sub_map
 /;

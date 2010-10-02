@@ -2,19 +2,19 @@ package Exodist::Util::Sub;
 use strict;
 use warnings;
 
-use Exporter::Declare;
+use Exporter::Declare '-all';
 use Exodist::Util::Package qw/inject_sub/;
 use Carp qw/croak/;
 use B;
 
-our @EXPORT = qw/
+default_exports qw/
     enhance_sub
 /;
 
 our %STASH;
 
-export( 'enhanced_sub', 'sublike' );
-export( 'esub', 'sublike', \&enhanced_sub );
+default_export( 'enhanced_sub', 'sublike' );
+default_export( 'esub', 'sublike', \&enhanced_sub );
 
 sub new {
     my $class = shift;

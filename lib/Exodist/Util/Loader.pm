@@ -5,7 +5,7 @@ use warnings;
 use Exporter::Declare;
 use Carp qw/croak/;
 
-our @EXPORT = qw/ load_package /;
+default_exports qw/ load_package /;
 
 sub load_package {
     my ($name, $namespace) = @_;
