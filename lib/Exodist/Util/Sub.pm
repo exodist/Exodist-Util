@@ -2,7 +2,7 @@ package Exodist::Util::Sub;
 use strict;
 use warnings;
 
-use Exporter::Declare '-all';
+use Exporter::Declare '-magic';
 use Exodist::Util::Package qw/inject_sub/;
 use Carp qw/croak/;
 use B;

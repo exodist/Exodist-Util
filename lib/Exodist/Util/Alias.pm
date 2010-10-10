@@ -2,7 +2,7 @@ package Exodist::Util::Alias;
 use strict;
 use warnings;
 
-use Exporter::Declare '-all';
+use Exporter::Declare '-magic';
 use Exodist::Util::Package qw/ inject_sub /;
 
 gen_default_export( qw/alias begin/, sub {

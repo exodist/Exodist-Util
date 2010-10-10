@@ -4,7 +4,7 @@ use warnings;
 
 use Exporter::Declare '-all';
 
-our $VERSION = '0.005';
+our $VERSION = '0.006';
 our @UTIL_PACKAGES = qw/
     Exodist::Util::Package
     Exodist::Util::Alias
