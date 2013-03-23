@@ -16,18 +16,15 @@ our %STASH;
 default_export( 'enhanced_sub', 'sublike' );
 default_export( 'esub', 'sublike', \&enhanced_sub );
 
-sub new {
+sub bless_code {
     my $class = shift;
     my %proto = @_;
-    my $code = delete $proto{sub} || croak "No code provided";
-    my $self = bless( $code, $class );
-    $STASH{ $self } = \%proto;
-    return $self;
-}
 
-sub stash {
-    my $self = shift;
-    return $STASH{ $self };
+    my $code = delete $proto{sub} || croak "No code provided";
+    bless( $code, $class );
+    $STASH{ $code } = \%proto;
+
+    return;
 }
 
 sub enhanced_sub {
@@ -37,7 +34,7 @@ sub enhanced_sub {
     inject_sub( $caller, $name, $code )
         if $name;
 
-    my $self = __PACKAGE__->new(
+    __PACKAGE__->bless_code(
         sub => $code,
         end_line => $line,
     );
@@ -58,7 +55,10 @@ sub enhance_sub {
         $caller ||= caller;
         $ref = \&{ "$caller\::$sub" }
     }
-    return __PACKAGE__->new( sub => $ref );
+
+    __PACKAGE__->bless_code( sub => $ref );
+
+    return;
 }
 
 sub start_line {
