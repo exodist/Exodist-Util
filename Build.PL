@@ -12,6 +12,7 @@ my $build = Module::Build->new(
     requires => {
         'perl'              => 5.008,
         'Exporter::Declare' => '0.102',
+        'Hash::FieldHash'   => '0.09',
         'Scalar::Util'      => 0,
         'List::Util'        => 0,
         'Devel::Declare::Parser' => '0.017',

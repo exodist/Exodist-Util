@@ -6,12 +6,13 @@ use Exporter::Declare '-magic';
 use Exodist::Util::Package qw/inject_sub/;
 use Carp qw/croak/;
 use B;
+use Hash::FieldHash qw(fieldhash);
 
 default_exports qw/
     enhance_sub
 /;
 
-our %STASH;
+fieldhash my %STASH;
 
 default_export( 'enhanced_sub', 'sublike' );
 default_export( 'esub', 'sublike', \&enhanced_sub );
@@ -84,11 +85,6 @@ sub is_anon {
 sub original_package {
     my $self = shift;
     return B::svref_2object( $self )->GV->STASH->NAME;
-}
-
-sub DESTROY {
-    my $self = shift;
-    delete $STASH{ $self };
 }
 
 1;
