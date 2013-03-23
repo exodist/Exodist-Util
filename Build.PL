@@ -15,6 +15,7 @@ my $build = Module::Build->new(
         'Scalar::Util'      => 0,
         'List::Util'        => 0,
         'Devel::BeginLift'  => '0.001003',
+        'Devel::Declare::Parser' => '0.017',
     },
     build_requires => {
         'Test::More'      => 0.88,
