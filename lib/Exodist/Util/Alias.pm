@@ -39,9 +39,8 @@ Exodist::Util::Alias - Yet another set of aliasing tools
 
 =head1 EXPORTS
 
-All exports use L<Devel::BeginLift>. This means they are run at compile time
-rather than run-time. This is the same os if they have been wrapped in a BEGIN
-block.
+All exports are run at compile time rather than run-time, the same as
+if they have been wrapped in a BEGIN block.
 
 =over 4
 
