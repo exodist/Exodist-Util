@@ -4,7 +4,7 @@ use warnings;
 
 use Exporter::Declare '-all';
 
-our $VERSION = '0.006';
+our $VERSION       = '0.007';
 our @UTIL_PACKAGES = qw/
     Exodist::Util::Package
     Exodist::Util::Alias
@@ -13,11 +13,11 @@ our @UTIL_PACKAGES = qw/
     Exodist::Util::Sub
     List::Util
     Scalar::Util
-/;
+    /;
 
-for my $package ( @UTIL_PACKAGES ) {
+for my $package (@UTIL_PACKAGES) {
     eval "require $package; 1" || die $@;
-    reexport( $package );
+    reexport($package);
 }
 
 #use Data::Dumper;

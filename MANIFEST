@@ -13,3 +13,5 @@ t/Loader.t
 t/Package.t
 t/Sub.t
 t/Util.t
+META.yml
+META.json

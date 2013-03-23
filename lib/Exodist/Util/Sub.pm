@@ -2,7 +2,7 @@ package Exodist::Util::Sub;
 use strict;
 use warnings;
 
-use Exporter::Declare '-magic';
+use Exporter::Declare::Magic;
 use Exodist::Util::Package qw/inject_sub/;
 use Carp qw/croak/;
 use B;
@@ -10,7 +10,7 @@ use Hash::FieldHash qw(fieldhash);
 
 default_exports qw/
     enhance_sub
-/;
+    /;
 
 fieldhash my %STASH;
 
@@ -23,7 +23,7 @@ sub bless_code {
 
     my $code = delete $proto{sub} || croak "No code provided";
     bless( $code, $class );
-    $STASH{ $code } = \%proto;
+    $STASH{$code} = \%proto;
 
     return;
 }
@@ -36,7 +36,7 @@ sub enhanced_sub {
         if $name;
 
     __PACKAGE__->bless_code(
-        sub => $code,
+        sub      => $code,
         end_line => $line,
     );
 
@@ -46,7 +46,7 @@ sub enhanced_sub {
 sub enhance_sub {
     my ($in) = @_;
     my $ref;
-    if (ref $in and ref $in eq 'CODE' ) {
+    if ( ref $in and ref $in eq 'CODE' ) {
         $ref = $in;
     }
     else {
@@ -54,7 +54,7 @@ sub enhance_sub {
         my ( $caller, $sub ) = ( $1, $2 );
         $caller =~ s/::$// if $caller;
         $caller ||= caller;
-        $ref = \&{ "$caller\::$sub" }
+        $ref = \&{"$caller\::$sub"};
     }
 
     __PACKAGE__->bless_code( sub => $ref );
@@ -64,17 +64,17 @@ sub enhance_sub {
 
 sub start_line {
     my $self = shift;
-    return B::svref_2object( $self )->START->line;
+    return B::svref_2object($self)->START->line;
 }
 
 sub end_line {
     my $self = shift;
-    return $STASH{ $self }->{end_line};
+    return $STASH{$self}->{end_line};
 }
 
 sub original_name {
     my $self = shift;
-    return B::svref_2object( $self )->GV->NAME;
+    return B::svref_2object($self)->GV->NAME;
 }
 
 sub is_anon {
@@ -84,7 +84,7 @@ sub is_anon {
 
 sub original_package {
     my $self = shift;
-    return B::svref_2object( $self )->GV->STASH->NAME;
+    return B::svref_2object($self)->GV->STASH->NAME;
 }
 
 1;
