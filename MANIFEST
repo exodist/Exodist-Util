@@ -1,0 +1,15 @@
+Build.PL
+lib/Exodist/Util.pm
+lib/Exodist/Util/Accessors.pm
+lib/Exodist/Util/Alias.pm
+lib/Exodist/Util/Loader.pm
+lib/Exodist/Util/Package.pm
+lib/Exodist/Util/Sub.pm
+MANIFEST			This list of files
+README
+t/Accessors.t
+t/Alias.t
+t/Loader.t
+t/Package.t
+t/Sub.t
+t/Util.t
